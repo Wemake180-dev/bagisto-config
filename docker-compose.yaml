@@ -4,23 +4,8 @@ services:
   bagisto-dev:
     image: bagisto-custom:latest
     build:
-      dockerfile_inline: |
-        FROM ubuntu:22.04
-        ENV DEBIAN_FRONTEND=noninteractive
-        RUN apt-get update && apt-get install -y \
-            software-properties-common \
-            && add-apt-repository ppa:ondrej/php \
-            && apt-get update && apt-get install -y \
-            php8.2 php8.2-cli php8.2-mysql php8.2-xml \
-            php8.2-mbstring php8.2-curl php8.2-zip php8.2-gd \
-            php8.2-bcmath php8.2-intl apache2 libapache2-mod-php8.2 \
-            git curl unzip nano openssh-server mysql-client
-        RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-        RUN a2enmod rewrite
-        RUN echo 'root:bagisto' | chpasswd
-        RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-        WORKDIR /var/www/html
-        CMD service ssh start && apache2ctl -D FOREGROUND
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8081:80"
       - "2222:22"

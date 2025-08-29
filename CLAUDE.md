@@ -75,7 +75,7 @@ npm run build  # Production build
 
 ## Access Points
 
-- **Web Application**: http://localhost:8080
+- **Web Application**: http://localhost:8081
 - **SSH Access**: ssh -p 2222 root@localhost (password: bagisto)
 - **MySQL Connection**:
   - Host: mysql_bagisto (from within containers)
@@ -84,9 +84,36 @@ npm run build  # Production build
   - User: bagisto
   - Password: bagisto123
 
+## Technical Specifications
+
+- **PHP**: 8.2 with all required Bagisto extensions
+- **Node.js**: LTS version with NPM
+- **Apache**: 2.4 with mod_rewrite enabled
+- **MySQL**: 8.0 with utf8mb4_unicode_ci collation
+- **Composer**: 2.5+
+
+## Requirement Validation
+
+Use the included validation script:
+```bash
+# Copy and run validation script inside container
+chmod +x validate-requirements.sh
+./validate-requirements.sh
+```
+
+Or manually verify key components:
+```bash
+php -v                    # Should show 8.2+
+composer -v              # Should show 2.5+
+node -v && npm -v        # Should show LTS version
+php -m | grep -E "(intl|gd|mbstring|curl|zip|bcmath|xml|mysql)"
+```
+
 ## Important Notes
 
 - The Apache DocumentRoot is configured to `/var/www/html/public` as required by Laravel/Bagisto
 - PHP memory limit is set to 512M and max execution time to 360 seconds for Bagisto requirements
-- The environment includes both development tools (git, composer, npm) and runtime requirements
+- Node.js LTS is installed from official NodeSource repository for latest features
+- The environment includes all development tools (git, composer, npm) and runtime requirements
 - SSH is enabled for direct container access during development
+- After rebuilding containers, all Bagisto requirements should be satisfied
