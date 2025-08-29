@@ -22,7 +22,7 @@ services:
         WORKDIR /var/www/html
         CMD service ssh start && apache2ctl -D FOREGROUND
     ports:
-      - "8080:80"
+      - "8081:80"
       - "2222:22"
     volumes:
       - ./workspace:/var/www/html
