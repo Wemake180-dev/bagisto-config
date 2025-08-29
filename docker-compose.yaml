@@ -13,18 +13,9 @@ services:
       - ./workspace:/var/www/html
     networks:
       - bagisto_net
-
-  mysql_bagisto:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: bagisto
-      MYSQL_USER: bagisto
-      MYSQL_PASSWORD: bagisto123
-    volumes:
-      - ./mysql_data:/var/lib/mysql
-    networks:
-      - bagisto_net
+      - coolify
 
 networks:
   bagisto_net:
+  coolify:
+    external: true
